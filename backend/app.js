@@ -3,9 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const mysql = require('mysql');
+//const mysql = require('mysql');
 
-const dbConfig = require("../config/db.config.js");
+//const dbConfig = require("../config/db.config.js");
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -41,12 +41,12 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-const connection = mysql.createConnection({
-  host: dbConfig.HOST,
-  user: dbConfig.USER,
-  password: dbConfig.PASSWORD,
-  database: dbConfig.DB
-});
+// const connection = mysql.createConnection({
+//   host: dbConfig.HOST,
+//   user: dbConfig.USER,
+//   password: dbConfig.PASSWORD,
+//   database: dbConfig.DB
+// });
 
 module.exports = app;
-module.exports = connection;
+//module.exports = connection;

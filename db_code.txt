@@ -1,0 +1,22 @@
+CREATE TABLE `meat_site_db`.`users` ( 
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT , 
+`nickname` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , 
+`name` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , 
+`password` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , 
+`role` TINYINT(2) UNSIGNED NOT NULL , 
+`creation_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+`update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+`is_deleted` BOOLEAN NOT NULL DEFAULT FALSE , 
+PRIMARY KEY (`id`), 
+UNIQUE (`nickname`)) 
+ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE `meat_site_db`.`roles` ( 
+`id` TINYINT(2) NOT NULL AUTO_INCREMENT , 
+`name` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , 
+`name_ru` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , 
+PRIMARY KEY (`id`), 
+UNIQUE (`name`, `name_ru`)) 
+ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci;
+
+ALTER TABLE `users` ADD FOREIGN KEY (`id_role`) REFERENCES `roles`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
