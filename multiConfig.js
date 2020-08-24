@@ -1,5 +1,6 @@
 export const DOMAIN = "localhost";
-export const SERVER_DOMAIN = "localhost";
+export const CLIENT_DOMAIN = "http://localhost:3000";
+export const SERVER_DOMAIN = "http://localhost:3001";
 export const DB_HOST = "localhost";
 
 export const ADMIN = "1";

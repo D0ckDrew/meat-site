@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "antd": "^4.5.4",
+    "axios": "^0.20.0",
+    "mobx": "^5.15.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",

@@ -20,3 +20,19 @@ UNIQUE (`name`, `name_ru`))
 ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci;
 
 ALTER TABLE `users` ADD FOREIGN KEY (`id_role`) REFERENCES `roles`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+CREATE TABLE `meat_site_db`.`product_positions` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `name_ru` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `description` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL , `id_product_type` INT UNSIGNED NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE `product_type` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `name_ru` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `product_type`
+  ADD PRIMARY KEY (`id`);
+ALTER TABLE `product_type`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `product_positions` ADD FOREIGN KEY (`id_product_type`) REFERENCES `product_type`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+

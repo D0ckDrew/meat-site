@@ -8,7 +8,7 @@ const db = require('../db')
 router.get('/', function(req, res, next) {
   let sql = `SELECT * FROM users`;
   db.query(sql, function(err, data, fields){
-    if (err) throw err;
+    if (err) console.log(err);
     res.json({
       status: 200,
       data,
