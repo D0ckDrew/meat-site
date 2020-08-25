@@ -12,7 +12,7 @@ class App extends Component {
         <Switch>
             <Route exact path='/' component={MainPage}/>
             <Route exact path='/login' component={LoginPage}/>
-            <Route exact path='/admin' component={AdminMainPage}/>
+            <Route exact path='/admin/main-page' component={AdminMainPage}/>
             <Redirect from='/go' to='/login'/>
         </Switch>
     );
