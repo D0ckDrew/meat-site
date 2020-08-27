@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
+import loginService from "../services/LoginService";
 
 const layout = {
     labelCol: {
@@ -17,7 +18,9 @@ const tailLayout = {
 };
 
 const LoginForm = () => {
+
     const onFinish = values => {
+        loginService.loginUser(values);
         console.log('Success:', values);
     };
 

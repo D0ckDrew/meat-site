@@ -1,9 +1,94 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db')
+const multiConfigDB = require("../config/multiConfigDB");
+const bodyParser = require("body-parser");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken')
 
 /* GET users listing. */
 
+/*
+router.post('/register', function(req, res, next) {
+  req.params.id
+  let sql = `SELECT * FROM users`;
+  db.query(sql, function(err, data, fields){
+    if (err) console.log(err);
+    res.json({
+      status: 200,
+      data,
+      message: 'successfully'
+    })
+  })
+});*/
+
+router.use(async (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', multiConfigDB.CLIENT_DOMAIN);
+  res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
+
+router.post('/login' , function(req, res, next) {
+  if (!req.body){
+    res.sendStatus(400);
+  }
+
+  const nickname = req.body.username;
+  const password = req.body.password;
+  const sql = "SELECT id, nickname, password, id_role FROM users WHERE nickname =?";
+  const dataSql = [nickname];
+
+  db.query(sql, dataSql, function(err, data, fields) {
+    if (err) console.log("ERROOOOOR: " +err);
+    if (!data.length) {
+      res.json({
+        status: 501,
+        message: 'incorrect data'
+      });
+      return;
+    }
+    //console.log(data[0].password);
+
+    bcrypt.compare(password, data[0].password).then((result) => {
+      if (result === true){
+        const tokenData={
+          id: data[0].id,
+          nickname: data[0].nickname,
+          id_role: data[0].id_role,
+        }
+        const token = jwt.sign(tokenData, multiConfigDB.SECRET);
+        console.log(token);
+        res.json({
+          status: 200,
+          message: 'access is allowed',
+          token: token
+        })}
+        else{
+          res.json({
+            status: 501,
+            message: 'incorrect data'
+          })}
+      })
+    });
+});
+
+router.post('/register' , function(req, res, next) {
+  if (!req.body){
+    res.sendStatus(400);
+  }
+
+  const nickname = req.body.username;
+  const password = req.body.password;
+  console.log("User: " + nickname);
+  console.log("Password: " + password);
+
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(req.body.password, salt);
+  console.log("Hash: " + hash);
+
+  res.sendStatus(200);
+});
 
 router.get('/', function(req, res, next) {
   let sql = `SELECT * FROM users`;
@@ -15,15 +100,6 @@ router.get('/', function(req, res, next) {
       message: 'successfully'
     })
   })
-  //res.render('index', { title: 'Express' });
-
-  // res.json([{
-  //   id: 1,
-  //   username: "samsepi0l"
-  // }, {
-  //   id: 2,
-  //   username: "D0loresH4ze"
-  // }]);
 });
 
 module.exports = router;
