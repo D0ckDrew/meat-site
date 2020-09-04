@@ -1,26 +1,14 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from "../components/Header";
 import entrancesService from "../services/EntrancesService";
 import {Table, Skeleton} from "antd";
 import {observer} from "mobx-react";
 
 const AdminMainPage = observer(() => {
-    const [dataSource, setDataSource] = useState([]);
 
     useEffect(()=>{
-        //console.log("1");
-        entrancesService.getDeliveryPositions().then((response)=>{
-            setDataSource(response.data.data);
-        });
-        //setDataSource(entrancesService.deliveryPositions);
+        entrancesService.getDeliveryPositions();
     },[])
-
-  //  useEffect(()=>{
-        //console.log("1");
-        //entrancesService.getDeliveryPositions();
-  //      setDataSource(entrancesService.deliveryPositions);
-   // },[entrancesService.deliveryPositions])
-
 
     const columns = [
         {
@@ -53,8 +41,8 @@ const AdminMainPage = observer(() => {
         return (
             <div>
                 <Header disableLogin/>
-                {dataSource.length ?
-                <Table dataSource={dataSource} columns={columns}/>:
+                {entrancesService.deliveryPositions.length ?
+                <Table dataSource={entrancesService.deliveryPositions} columns={columns}/>:
                     <Skeleton active />}
             </div>
         )

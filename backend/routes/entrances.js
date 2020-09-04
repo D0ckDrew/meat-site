@@ -3,6 +3,13 @@ const router = express.Router();
 const db = require('../db')
 const multiConfigDB = require('../config/multiConfigDB');
 
+router.use(async (req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', multiConfigDB.CLIENT_DOMAIN);
+    res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    next();
+});
+
 router.get('/getDeliveryPositions', function(req, res, next) {
     let sql = `SELECT delivery_positions.id AS "key",
     delivery_positions.weight,
@@ -17,15 +24,19 @@ router.get('/getDeliveryPositions', function(req, res, next) {
     JOIN entrances ON delivery_positions.id_entrances=entrances.id
     JOIN vendors ON delivery_positions.id_vendors=vendors.id`;
     db.query(sql, function(err, data, fields){
-        if (err) console.log(err);
-        res.header("Access-Control-Allow-Origin", multiConfigDB.CLIENT_DOMAIN);
+        if (err){
+            next(new Error('Ошибка сервера!'));
+        }
         res.json({
             status: 200,
             data,
             message: 'successfully'
         })
+    })}, function(err, req, res, next) {
+    res.json({
+        status: 501,
+        message: err.message
     })
-    //res.render('index', { title: 'Express' });
 });
 
 module.exports = router;

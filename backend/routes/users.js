@@ -34,22 +34,19 @@ router.post('/login' , function(req, res, next) {
     res.sendStatus(400);
   }
 
-  const nickname = req.body.username;
-  const password = req.body.password;
+  let nickname = req.body.username;
+  let password = req.body.password;
   const sql = "SELECT id, nickname, password, id_role FROM users WHERE nickname =?";
-  const dataSql = [nickname];
+  let dataSql = [nickname];
 
   db.query(sql, dataSql, function(err, data, fields) {
-    if (err) console.log("ERROOOOOR: " +err);
-    if (!data.length) {
-      res.json({
-        status: 501,
-        message: 'incorrect data'
-      });
-      return;
+    if (err){
+      next(new Error('Ошибка сервера!'));
     }
-    //console.log(data[0].password);
-
+    else if (!data.length) {
+      next(new Error('Введены некорректные данные!'));
+    }
+    else {
     bcrypt.compare(password, data[0].password).then((result) => {
       if (result === true){
         const tokenData={
@@ -65,12 +62,15 @@ router.post('/login' , function(req, res, next) {
           token: token
         })}
         else{
-          res.json({
-            status: 501,
-            message: 'incorrect data'
-          })}
+          next(new Error('Введены некорректные данные!'));
+        }
       })
-    });
+    }});
+}, function(err, req, res, next) {
+  res.json({
+    status: 501,
+    message: err.message
+  })
 });
 
 router.post('/register' , function(req, res, next) {
@@ -90,6 +90,7 @@ router.post('/register' , function(req, res, next) {
   res.sendStatus(200);
 });
 
+/*
 router.get('/', function(req, res, next) {
   let sql = `SELECT * FROM users`;
   db.query(sql, function(err, data, fields){
@@ -101,5 +102,6 @@ router.get('/', function(req, res, next) {
     })
   })
 });
+ */
 
 module.exports = router;
