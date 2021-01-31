@@ -57,7 +57,7 @@ const LoginForm = () => {
                 rules={[
                     {
                         required: true,
-                        message: 'Пожалуйста, введите пароль!!',
+                        message: 'Пожалуйста, введите пароль!',
                     },
                 ]}
             >

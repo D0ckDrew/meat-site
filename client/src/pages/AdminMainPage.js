@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Header from "../components/Header";
 import entrancesService from "../services/EntrancesService";
 import {Table, Skeleton} from "antd";
@@ -8,7 +8,7 @@ const AdminMainPage = observer(() => {
 
     useEffect(()=>{
         entrancesService.getDeliveryPositions();
-    },[])
+    },[]);
 
     const columns = [
         {
@@ -46,6 +46,6 @@ const AdminMainPage = observer(() => {
                     <Skeleton active />}
             </div>
         )
-})
+});
 
 export default AdminMainPage;
