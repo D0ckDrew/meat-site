@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import LoginForm from "../components/LoginForm";
 import {Row, Col} from "antd";
 
 export default class LoginPage extends Component{
     render () {
         return (
-            <div>
-
-                <Row justify="center" align="middle" style={{margin:'10px'}}>
-                    <Col span={16} style={{backgroundColor:'#E5F0FF', padding:'8px'}}>
+            <div style={{height: "100vh"}} >
+                <Row justify="space-around" align="middle" style={{height: "90vh"}}>
+                    <Col sm={12} md={8} lg={6} >
                         <LoginForm/>
                     </Col>
-                </Row>
+                    </Row>
             </div>
         )
     }
