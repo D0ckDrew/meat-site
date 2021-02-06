@@ -1,12 +1,13 @@
 import axios from "axios";
 import {message} from 'antd';
 import {action, decorate, observable} from "mobx";
+import API from "../utils/API";
 
 class EntrancesService {
     deliveryPositions = [];
 
     getDeliveryPositions(){
-        axios.get(`http://localhost:3001/entrances/getDeliveryPositions`)
+        API.get("/entrances/getDeliveryPositions")
            .then(function (result) {
                if (result.data["status"] === 200){
                    message.success("Success");
@@ -17,7 +18,7 @@ class EntrancesService {
                }
             })
             .catch(function () {
-                message.error("Неизвестная ошибка!");
+                message.error("Ошибка сервера!");
             });
     };
 }
@@ -25,7 +26,7 @@ class EntrancesService {
 decorate(EntrancesService,{
     deliveryPositions : observable,
     getDeliveryPositions : action
-})
+});
 
 const entrancesService = new EntrancesService();
 export default entrancesService;

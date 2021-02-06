@@ -49,17 +49,18 @@ router.post('/login' , function(req, res, next) {
     else {
     bcrypt.compare(password, data[0].password).then((result) => {
       if (result === true){
-        const tokenData={
+        const userData={
           id: data[0].id,
           nickname: data[0].nickname,
           id_role: data[0].id_role,
-        }
-        const token = jwt.sign(tokenData, multiConfigDB.SECRET);
+        };
+        const token = jwt.sign(userData, multiConfigDB.SECRET);
+          userData.token = token;
         console.log(token);
         res.json({
           status: 200,
           message: 'access is allowed',
-          token: token
+          user: userData
         })}
         else{
           next(new Error('Введены некорректные данные!'));

@@ -4,4 +4,4 @@ module.exports ={
     PORT: process.env.PORT || 3001,
     SECRET: "tucrboPassword123",
     PRODUCTION: process.env.NODE_ENV === "production"
-}
+};

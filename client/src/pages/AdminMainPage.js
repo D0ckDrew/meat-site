@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
-import Header from "../components/Header";
+import {Row, Col, Card} from "antd";
 import entrancesService from "../services/EntrancesService";
 import {Table, Skeleton} from "antd";
 import {observer} from "mobx-react";
+import AdminLayout from "../components/layot/AdminLayout";
 
 const AdminMainPage = observer(() => {
 
@@ -40,10 +41,22 @@ const AdminMainPage = observer(() => {
 
         return (
             <div>
-                <Header disableLogin/>
-                {entrancesService.deliveryPositions.length ?
-                <Table dataSource={entrancesService.deliveryPositions} columns={columns}/>:
-                    <Skeleton active />}
+                <AdminLayout>
+                    <Row gutter={[16, 16]}>
+                        <Col sm={24} ms={24} lg={24} xl={16}>
+                            <Card title="Позиции на складе">
+                                {entrancesService.deliveryPositions.length ?
+                                    <Table dataSource={entrancesService.deliveryPositions} columns={columns}/>:
+                                    <Skeleton active />}
+                            </Card>
+                        </Col>
+                        <Col sm={24} ms={24} lg={24} xl={8}>
+                            <Card title="Находится в переработке">
+                                None
+                            </Card>
+                        </Col>
+                    </Row>
+                </AdminLayout>
             </div>
         )
 });

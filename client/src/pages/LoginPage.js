@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Row, Col} from "antd";
+import LoginForm from "../components/LoginForm";
 
 export default class LoginPage extends Component{
     render () {
