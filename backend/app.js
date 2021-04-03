@@ -8,7 +8,7 @@ const logger = require('morgan');
 //const dbConfig = require("../config/db.config.js");
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const usersRouter = require('./modules/user/router/userRouter');
 const entrancesRouter = require('./routes/entrances');
 
 const app = express();

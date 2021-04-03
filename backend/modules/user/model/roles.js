@@ -1,0 +1,10 @@
+const Roles = {
+    ROLE_GUEST: 'ROLE_GUEST',
+    ROLE_WAREHOUSE: 'ROLE_WAREHOUSE',
+    ROLE_RECYCLING: 'ROLE_RECYCLING',
+    ROLE_SALES: 'ROLE_SALES',
+    ROLE_ADMIN: 'ROLE_ADMIN'
+};
+
+module.exports = Roles;
+
