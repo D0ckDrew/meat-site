@@ -40,8 +40,20 @@ class DeliveriesDao {
         })
     }
 
+    getDeliveryMaterials(deliveryId) {
+        const sql = 'SELECT * FROM delivery\n' +
+            'INNER JOIN receipts ON receipts.deliveryId = delivery.id\n' +
+            'INNER JOIN receipts_log ON receipts_log.id = receipts.receiptsLogId\n' +
+            'WHERE delivery.id = ?';
+
+        return new Promise((resolve) => {
+            db.query(sql, [deliveryId], function (err, result) {
+                resolve(result);
+            })
+        })
+    }
+
     deleteDelivery(deliveryId) {
-        const delId= deliveryId;
         const sql = 'DELETE receipts_log, receipts, delivery FROM receipts_log \n' +
             'RIGHT JOIN receipts ON receipts.receiptsLogId = receipts_log.id\n' +
             'RIGHT JOIN delivery ON delivery.id = receipts.deliveryId\n' +

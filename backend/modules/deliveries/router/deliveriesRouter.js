@@ -18,22 +18,79 @@ router.get('/getReceiptMaterial', async function (req, res, next) {
         res.sendStatus(400);
     }
 
-    const data = deliveriesService.getReceiptMaterial();
+    const receiptId = req.body.receiptId;
+
+    const data = await deliveriesService.getReceiptMaterial(receiptId);
     res.json({
         status: 200,
-        user: data
+        data: data
     })
 });
+
+router.get('/getDeliveryMaterials', async function (req, res, next) {
+    if (!req.body) {
+        res.sendStatus(400);
+    }
+
+    const deliveryId = req.body.deliveryId;
+
+    const data = await deliveriesService.getDeliveryMaterials(deliveryId);
+    res.json({
+        status: 200,
+        data: data
+    })
+});
+
 
 router.post('/addDelivery', async function (req, res, next) {
     if (!req.body) {
         res.sendStatus(400);
     }
 
-    const statusCode = await deliveriesService.addDelivery();
+    const delivery = {
+        date: req.body.date,
+        note: req.body.note,
+        suppliersId: req.body.suppliersId,
+        userId: req.body.userId
+    }
 
-    if (statusCode != AddStatus.OK) {
-        next(new Error(statusCode));
+    const data = await deliveriesService.addDelivery(delivery);
+
+    if (data.status !== AddStatus.OK) {
+        next(new Error(data));
+    } else {
+        res.json({
+            status: 200,
+            data: data
+        })
+    }
+
+}, function (err, req, res, next) {
+    res.json({
+        status: 501,
+        message: data
+    })
+});
+
+router.post('/addReceipts', async function (req, res, next) {
+    if (!req.body) {
+        res.sendStatus(400);
+    }
+
+    const receipt = {
+        deliveryId: req.body.deliveryId,
+        quantity : req.body.quantity,
+        quantityRemains: req.body.quantityRemains,
+        date: req.body.date,
+        materialsId: req.body.materialsId,
+        receiptsReasonId: req.body.receiptsReasonId,
+        userId: req.body.userId
+    }
+
+    const data = await deliveriesService.addReceipts(receipt);
+
+    if (data.status !== AddStatus.OK) {
+        next(new Error(data));
     } else {
         res.json({
             status: 200,
@@ -44,45 +101,8 @@ router.post('/addDelivery', async function (req, res, next) {
 }, function (err, req, res, next) {
     res.json({
         status: 501,
-        message: err.message
+        message: data
     })
 });
-
-router.post('/addDelivery', async function (req, res, next) {
-    if (!req.body) {
-        res.sendStatus(400);
-    }
-
-    const statusCode = await deliveriesService.addDelivery();
-
-    if (statusCode != AddStatus.OK) {
-        next(new Error(statusCode));
-    } else {
-        res.json({
-            status: 200,
-            user: data
-        })
-    }
-
-}, function (err, req, res, next) {
-    res.json({
-        status: 501,
-        message: err.message
-    })
-});
-
-/*
-router.get('/', function(req, res, next) {
-  let sql = `SELECT * FROM users`;
-  db.query(sql, function(err, data, fields){
-    if (err) console.log(err);
-    res.json({
-      status: 200,
-      data,
-      message: 'successfully'
-    })
-  })
-});
- */
 
 module.exports = router;

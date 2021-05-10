@@ -31,11 +31,16 @@ class DeliveriesService {
     }
 
     async addReceipts(receipt) {
-        return await deliveriesDao.addReceipts(receipt);
+        const addStatus = await deliveriesDao.addReceipts(receipt);
+        return {status: addStatus};
     }
 
     async getReceiptMaterial(receiptId) {
         return await deliveriesDao.getReceiptMaterial(receiptId)
+    }
+
+    async getDeliveryMaterials(deliveryId) {
+        return await deliveriesDao.getDeliveryMaterials(deliveryId)
     }
 
     async deleteReceipt(receiptId) {
