@@ -1,7 +1,6 @@
 package com.meatSite.meatSiteBackend.database.model;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Table(name = "material", schema = "meat_site_db", catalog = "")
@@ -11,17 +10,13 @@ public class MaterialModel {
     private Integer photo;
     private Integer typeMaterialId;
     private Integer unitId;
-    private Collection<InputMaterialsModel> inputMaterialsById;
-    private Collection<ItemsInMaterialsWarehouseModel> itemsInMaterialsWarehousesById;
-    private TypeMaterialModel typeMaterialByTypeMaterialId;
-    private UnitModel unitByUnitId;
-    private Collection<MaterialExpenseLogModel> materialExpenseLogsById;
-    private Collection<MaterialReceiptsLogModel> materialReceiptsLogsById;
-    private Collection<OutputMaterialsModel> outputMaterialsById;
+
+    private TypeMaterialModel typeMaterialById;
+    private UnitModel unitById;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
@@ -31,7 +26,7 @@ public class MaterialModel {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 100)
     public String getName() {
         return name;
     }
@@ -41,7 +36,7 @@ public class MaterialModel {
     }
 
     @Basic
-    @Column(name = "photo")
+    @Column(name = "photo", nullable = false)
     public Integer getPhoto() {
         return photo;
     }
@@ -51,7 +46,7 @@ public class MaterialModel {
     }
 
     @Basic
-    @Column(name = "typeMaterialId")
+    @Column(name = "type_material_id", nullable = false)
     public Integer getTypeMaterialId() {
         return typeMaterialId;
     }
@@ -61,7 +56,7 @@ public class MaterialModel {
     }
 
     @Basic
-    @Column(name = "unitId")
+    @Column(name = "unit_id", nullable = false)
     public Integer getUnitId() {
         return unitId;
     }
@@ -97,68 +92,23 @@ public class MaterialModel {
         return result;
     }
 
-    @OneToMany(mappedBy = "materialByMaterialId")
-    public Collection<InputMaterialsModel> getInputMaterialsById() {
-        return inputMaterialsById;
+    @ManyToOne
+    @JoinColumn(name = "type_material_id", referencedColumnName = "id", insertable = false, updatable = false)
+    public TypeMaterialModel getTypeMaterialById() {
+        return typeMaterialById;
     }
 
-    public void setInputMaterialsById(Collection<InputMaterialsModel> inputMaterialsById) {
-        this.inputMaterialsById = inputMaterialsById;
-    }
-
-    @OneToMany(mappedBy = "materialByMaterialId")
-    public Collection<ItemsInMaterialsWarehouseModel> getItemsInMaterialsWarehousesById() {
-        return itemsInMaterialsWarehousesById;
-    }
-
-    public void setItemsInMaterialsWarehousesById(Collection<ItemsInMaterialsWarehouseModel> itemsInMaterialsWarehousesById) {
-        this.itemsInMaterialsWarehousesById = itemsInMaterialsWarehousesById;
+    public void setTypeMaterialById(TypeMaterialModel typeMaterialById) {
+        this.typeMaterialById = typeMaterialById;
     }
 
     @ManyToOne
-    @JoinColumn(name = "typeMaterialId", referencedColumnName = "id", insertable = false, updatable = false)
-    public TypeMaterialModel getTypeMaterialByTypeMaterialId() {
-        return typeMaterialByTypeMaterialId;
+    @JoinColumn(name = "unit_id", referencedColumnName = "id", insertable = false, updatable = false)
+    public UnitModel getUnitById() {
+        return unitById;
     }
 
-    public void setTypeMaterialByTypeMaterialId(TypeMaterialModel typeMaterialByTypeMaterialId) {
-        this.typeMaterialByTypeMaterialId = typeMaterialByTypeMaterialId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "unitId", referencedColumnName = "id", insertable = false, updatable = false)
-    public UnitModel getUnitByUnitId() {
-        return unitByUnitId;
-    }
-
-    public void setUnitByUnitId(UnitModel unitByUnitId) {
-        this.unitByUnitId = unitByUnitId;
-    }
-
-    @OneToMany(mappedBy = "materialByMaterialId")
-    public Collection<MaterialExpenseLogModel> getMaterialExpenseLogsById() {
-        return materialExpenseLogsById;
-    }
-
-    public void setMaterialExpenseLogsById(Collection<MaterialExpenseLogModel> materialExpenseLogsById) {
-        this.materialExpenseLogsById = materialExpenseLogsById;
-    }
-
-    @OneToMany(mappedBy = "materialByMaterialId")
-    public Collection<MaterialReceiptsLogModel> getMaterialReceiptsLogsById() {
-        return materialReceiptsLogsById;
-    }
-
-    public void setMaterialReceiptsLogsById(Collection<MaterialReceiptsLogModel> materialReceiptsLogsById) {
-        this.materialReceiptsLogsById = materialReceiptsLogsById;
-    }
-
-    @OneToMany(mappedBy = "materialByMaterialId")
-    public Collection<OutputMaterialsModel> getOutputMaterialsById() {
-        return outputMaterialsById;
-    }
-
-    public void setOutputMaterialsById(Collection<OutputMaterialsModel> outputMaterialsById) {
-        this.outputMaterialsById = outputMaterialsById;
+    public void setUnitById(UnitModel unitById) {
+        this.unitById = unitById;
     }
 }

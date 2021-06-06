@@ -14,17 +14,19 @@ public class UserModel {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "username")
+    @Column(name = "username", nullable = false, length = 50)
     public String getUsername() {
         return username;
     }
@@ -34,7 +36,7 @@ public class UserModel {
     }
 
     @Basic
-    @Column(name = "password")
+    @Column(name = "password", nullable = false, length = 255)
     public String getPassword() {
         return password;
     }
@@ -44,7 +46,7 @@ public class UserModel {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 50)
     public String getName() {
         return name;
     }
@@ -54,7 +56,7 @@ public class UserModel {
     }
 
     @Basic
-    @Column(name = "surname")
+    @Column(name = "surname", nullable = false, length = 50)
     public String getSurname() {
         return surname;
     }
@@ -64,7 +66,7 @@ public class UserModel {
     }
 
     @Basic
-    @Column(name = "role")
+    @Column(name = "role", nullable = false, length = 50)
     public String getRole() {
         return role;
     }
@@ -100,5 +102,4 @@ public class UserModel {
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
     }
-
 }

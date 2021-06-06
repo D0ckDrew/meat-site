@@ -1,9 +1,9 @@
 package com.meatSite.meatSiteBackend.auth.api;
 
 import com.meatSite.meatSiteBackend.auth.model.LoginResponse;
-import com.meatSite.meatSiteBackend.auth.model.RegistrationStatus;
 import com.meatSite.meatSiteBackend.auth.service.AuthService;
 import com.meatSite.meatSiteBackend.database.model.UserModel;
+import com.meatSite.meatSiteBackend.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +25,8 @@ public class AuthApi {
     }
 
     @PostMapping("/registration")
-    public RegistrationStatus registration(@RequestParam String username,
-                                           @RequestParam String password) {
+    public Response registration(@RequestParam String username,
+                                 @RequestParam String password) {
         UserModel user = new UserModel();
         user.setUsername(username);
         user.setPassword(password);

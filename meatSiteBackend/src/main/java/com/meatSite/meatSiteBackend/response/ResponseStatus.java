@@ -1,17 +1,14 @@
-package com.meatSite.meatSiteBackend.auth.model;
+package com.meatSite.meatSiteBackend.response;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.meatSite.meatSiteBackend.response.Response;
-import org.springframework.http.HttpStatus;
-
-public enum LoginStatus {
+public enum ResponseStatus {
     SUCCESSFULLY(0, "Успешно!"),
-    INVALID_LOGIN_DATA(1, "Данные для входа введены неверно!");
+    VALIDATION_ERROR(1, "Ошибка валидации данных!"),
+    SERVER_ERROR(2, "Ошибка сервера! Пожалуйста, обратитесь к администратору системы.");
 
     private int code;
     private String message;
 
-    LoginStatus(int code, String message) {
+    ResponseStatus(int code, String message) {
         this.code = code;
         this.message = message;
     }

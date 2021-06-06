@@ -11,23 +11,22 @@ public class ProductionOutputModel {
     private Integer recyclingId;
     private Integer productReceiptsLogId;
     private Integer userId;
-    private RecyclingModel recyclingByRecyclingId;
-    private ProductReceiptsLogModel productReceiptsLogByProductReceiptsLogId;
-    private UserModel userByUserId;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     public Timestamp getDate() {
         return date;
     }
@@ -37,7 +36,7 @@ public class ProductionOutputModel {
     }
 
     @Basic
-    @Column(name = "recyclingId")
+    @Column(name = "recycling_id", nullable = false)
     public Integer getRecyclingId() {
         return recyclingId;
     }
@@ -47,7 +46,7 @@ public class ProductionOutputModel {
     }
 
     @Basic
-    @Column(name = "productReceiptsLogId")
+    @Column(name = "product_receipts_log_id", nullable = false)
     public Integer getProductReceiptsLogId() {
         return productReceiptsLogId;
     }
@@ -57,7 +56,7 @@ public class ProductionOutputModel {
     }
 
     @Basic
-    @Column(name = "userId")
+    @Column(name = "user_id", nullable = false)
     public Integer getUserId() {
         return userId;
     }
@@ -91,35 +90,5 @@ public class ProductionOutputModel {
         result = 31 * result + (productReceiptsLogId != null ? productReceiptsLogId.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "recyclingId", referencedColumnName = "id", insertable = false, updatable = false)
-    public RecyclingModel getRecyclingByRecyclingId() {
-        return recyclingByRecyclingId;
-    }
-
-    public void setRecyclingByRecyclingId(RecyclingModel recyclingByRecyclingId) {
-        this.recyclingByRecyclingId = recyclingByRecyclingId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "productReceiptsLogId", referencedColumnName = "id", insertable = false, updatable = false)
-    public ProductReceiptsLogModel getProductReceiptsLogByProductReceiptsLogId() {
-        return productReceiptsLogByProductReceiptsLogId;
-    }
-
-    public void setProductReceiptsLogByProductReceiptsLogId(ProductReceiptsLogModel productReceiptsLogByProductReceiptsLogId) {
-        this.productReceiptsLogByProductReceiptsLogId = productReceiptsLogByProductReceiptsLogId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id", insertable = false, updatable = false)
-    public UserModel getUserByUserId() {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(UserModel userByUserId) {
-        this.userByUserId = userByUserId;
     }
 }

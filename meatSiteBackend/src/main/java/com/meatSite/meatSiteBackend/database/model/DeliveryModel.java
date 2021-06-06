@@ -2,7 +2,6 @@ package com.meatSite.meatSiteBackend.database.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
 
 @Entity
 @Table(name = "delivery", schema = "meat_site_db", catalog = "")
@@ -13,12 +12,10 @@ public class DeliveryModel {
     private Integer suppliersId;
     private Integer userId;
     private SuppliersModel suppliersBySuppliersId;
-    private UserModel userByUserId;
-    private Collection<ReceiptsModel> receiptsById;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
@@ -28,7 +25,7 @@ public class DeliveryModel {
     }
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     public Timestamp getDate() {
         return date;
     }
@@ -38,7 +35,7 @@ public class DeliveryModel {
     }
 
     @Basic
-    @Column(name = "note")
+    @Column(name = "note", nullable = true, length = 100)
     public String getNote() {
         return note;
     }
@@ -48,7 +45,7 @@ public class DeliveryModel {
     }
 
     @Basic
-    @Column(name = "suppliersId")
+    @Column(name = "suppliers_id", nullable = false)
     public Integer getSuppliersId() {
         return suppliersId;
     }
@@ -58,7 +55,7 @@ public class DeliveryModel {
     }
 
     @Basic
-    @Column(name = "userId")
+    @Column(name = "user_id", nullable = false)
     public Integer getUserId() {
         return userId;
     }
@@ -94,31 +91,12 @@ public class DeliveryModel {
     }
 
     @ManyToOne
-    @JoinColumn(name = "suppliersId", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "suppliers_id", referencedColumnName = "id", insertable = false, updatable = false)
     public SuppliersModel getSuppliersBySuppliersId() {
         return suppliersBySuppliersId;
     }
 
     public void setSuppliersBySuppliersId(SuppliersModel suppliersBySuppliersId) {
         this.suppliersBySuppliersId = suppliersBySuppliersId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id", insertable = false, updatable = false)
-    public UserModel getUserByUserId() {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(UserModel userByUserId) {
-        this.userByUserId = userByUserId;
-    }
-
-    @OneToMany(mappedBy = "deliveryByDeliveryId")
-    public Collection<ReceiptsModel> getReceiptsById() {
-        return receiptsById;
-    }
-
-    public void setReceiptsById(Collection<ReceiptsModel> receiptsById) {
-        this.receiptsById = receiptsById;
     }
 }

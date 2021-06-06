@@ -1,24 +1,26 @@
 package com.meatSite.meatSiteBackend.auth.model;
 
+import com.meatSite.meatSiteBackend.response.Response;
+
 public class LoginResponse {
-    private LoginStatus loginStatus;
+    private Response loginStatus;
     private String token;
 
     public LoginResponse(LoginStatus loginStatus, String token) {
-        this.loginStatus = loginStatus;
+        this.loginStatus = loginStatus.getResponse();
         this.token = token;
     }
 
     public LoginResponse(LoginStatus loginStatus) {
-        this.loginStatus = loginStatus;
+        this.loginStatus = loginStatus.getResponse();
     }
 
-    public LoginStatus getLoginStatus() {
+    public Response getLoginStatus() {
         return loginStatus;
     }
 
     public void setLoginStatus(LoginStatus loginStatus) {
-        this.loginStatus = loginStatus;
+        this.loginStatus = loginStatus.getResponse();
     }
 
     public String getToken() {

@@ -1,7 +1,6 @@
 package com.meatSite.meatSiteBackend.database.model;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Table(name = "operation", schema = "meat_site_db", catalog = "")
@@ -10,25 +9,22 @@ public class OperationModel {
     private String name;
     private Double estimatedNumber;
     private Integer typeOperationId;
-    private Collection<InputMaterialsModel> inputMaterialsById;
-    private TypeOperationModel typeOperationByTypeOperationId;
-    private Collection<OutputMaterialsModel> outputMaterialsById;
-    private Collection<OutputProductsModel> outputProductsById;
-    private Collection<RecyclingModel> recyclingsById;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 100)
     public String getName() {
         return name;
     }
@@ -38,7 +34,7 @@ public class OperationModel {
     }
 
     @Basic
-    @Column(name = "estimatedNumber")
+    @Column(name = "estimated_number", nullable = false, precision = 3)
     public Double getEstimatedNumber() {
         return estimatedNumber;
     }
@@ -48,7 +44,7 @@ public class OperationModel {
     }
 
     @Basic
-    @Column(name = "typeOperationId")
+    @Column(name = "type_operation_id", nullable = false)
     public Integer getTypeOperationId() {
         return typeOperationId;
     }
@@ -81,51 +77,5 @@ public class OperationModel {
         result = 31 * result + (estimatedNumber != null ? estimatedNumber.hashCode() : 0);
         result = 31 * result + (typeOperationId != null ? typeOperationId.hashCode() : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "operationByOperationId")
-    public Collection<InputMaterialsModel> getInputMaterialsById() {
-        return inputMaterialsById;
-    }
-
-    public void setInputMaterialsById(Collection<InputMaterialsModel> inputMaterialsById) {
-        this.inputMaterialsById = inputMaterialsById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "typeOperationId", referencedColumnName = "id", insertable = false, updatable = false)
-    public TypeOperationModel getTypeOperationByTypeOperationId() {
-        return typeOperationByTypeOperationId;
-    }
-
-    public void setTypeOperationByTypeOperationId(TypeOperationModel typeOperationByTypeOperationId) {
-        this.typeOperationByTypeOperationId = typeOperationByTypeOperationId;
-    }
-
-    @OneToMany(mappedBy = "operationByOperationId")
-    public Collection<OutputMaterialsModel> getOutputMaterialsById() {
-        return outputMaterialsById;
-    }
-
-    public void setOutputMaterialsById(Collection<OutputMaterialsModel> outputMaterialsById) {
-        this.outputMaterialsById = outputMaterialsById;
-    }
-
-    @OneToMany(mappedBy = "operationByOperationId")
-    public Collection<OutputProductsModel> getOutputProductsById() {
-        return outputProductsById;
-    }
-
-    public void setOutputProductsById(Collection<OutputProductsModel> outputProductsById) {
-        this.outputProductsById = outputProductsById;
-    }
-
-    @OneToMany(mappedBy = "operationByOperationId")
-    public Collection<RecyclingModel> getRecyclingsById() {
-        return recyclingsById;
-    }
-
-    public void setRecyclingsById(Collection<RecyclingModel> recyclingsById) {
-        this.recyclingsById = recyclingsById;
     }
 }

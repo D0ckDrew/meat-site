@@ -1,28 +1,28 @@
 package com.meatSite.meatSiteBackend.database.model;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Table(name = "type_material", schema = "meat_site_db", catalog = "")
 public class TypeMaterialModel {
     private Long id;
     private String name;
-    private Collection<MaterialModel> materialsById;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 100)
     public String getName() {
         return name;
     }
@@ -49,14 +49,5 @@ public class TypeMaterialModel {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "typeMaterialByTypeMaterialId")
-    public Collection<MaterialModel> getMaterialsById() {
-        return materialsById;
-    }
-
-    public void setMaterialsById(Collection<MaterialModel> materialsById) {
-        this.materialsById = materialsById;
     }
 }

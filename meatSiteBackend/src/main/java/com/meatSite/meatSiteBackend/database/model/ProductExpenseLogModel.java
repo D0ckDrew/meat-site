@@ -2,7 +2,6 @@ package com.meatSite.meatSiteBackend.database.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
 
 @Entity
 @Table(name = "product_expense_log", schema = "meat_site_db", catalog = "")
@@ -13,24 +12,22 @@ public class ProductExpenseLogModel {
     private Integer productId;
     private Integer productExpenseReasonId;
     private Integer userId;
-    private ProductModel productByProductId;
-    private ProductExpenseReasonModel productExpenseReasonByProductExpenseReasonId;
-    private UserModel userByUserId;
-    private Collection<SaleContentModel> saleContentsById;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false, precision = 3)
     public Double getQuantity() {
         return quantity;
     }
@@ -40,7 +37,7 @@ public class ProductExpenseLogModel {
     }
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     public Timestamp getDate() {
         return date;
     }
@@ -50,7 +47,7 @@ public class ProductExpenseLogModel {
     }
 
     @Basic
-    @Column(name = "productId")
+    @Column(name = "product_id", nullable = false)
     public Integer getProductId() {
         return productId;
     }
@@ -60,7 +57,7 @@ public class ProductExpenseLogModel {
     }
 
     @Basic
-    @Column(name = "productExpenseReasonId")
+    @Column(name = "product_expense_reason_id", nullable = false)
     public Integer getProductExpenseReasonId() {
         return productExpenseReasonId;
     }
@@ -70,7 +67,7 @@ public class ProductExpenseLogModel {
     }
 
     @Basic
-    @Column(name = "userId")
+    @Column(name = "user_id", nullable = false)
     public Integer getUserId() {
         return userId;
     }
@@ -106,44 +103,5 @@ public class ProductExpenseLogModel {
         result = 31 * result + (productExpenseReasonId != null ? productExpenseReasonId.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "id", insertable = false, updatable = false)
-    public ProductModel getProductByProductId() {
-        return productByProductId;
-    }
-
-    public void setProductByProductId(ProductModel productByProductId) {
-        this.productByProductId = productByProductId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "productExpenseReasonId", referencedColumnName = "id", insertable = false, updatable = false)
-    public ProductExpenseReasonModel getProductExpenseReasonByProductExpenseReasonId() {
-        return productExpenseReasonByProductExpenseReasonId;
-    }
-
-    public void setProductExpenseReasonByProductExpenseReasonId(ProductExpenseReasonModel productExpenseReasonByProductExpenseReasonId) {
-        this.productExpenseReasonByProductExpenseReasonId = productExpenseReasonByProductExpenseReasonId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id", insertable = false, updatable = false)
-    public UserModel getUserByUserId() {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(UserModel userByUserId) {
-        this.userByUserId = userByUserId;
-    }
-
-    @OneToMany(mappedBy = "productExpenseLogByProductExpenseLogId")
-    public Collection<SaleContentModel> getSaleContentsById() {
-        return saleContentsById;
-    }
-
-    public void setSaleContentsById(Collection<SaleContentModel> saleContentsById) {
-        this.saleContentsById = saleContentsById;
     }
 }

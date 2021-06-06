@@ -8,12 +8,19 @@ public class ReceiptsModel {
     private Long id;
     private Integer materialReceiptsLogId;
     private Integer deliveryId;
-    private MaterialReceiptsLogModel materialReceiptsLogByMaterialReceiptsLogId;
-    private DeliveryModel deliveryByDeliveryId;
+    private MaterialReceiptsLogModel materialReceiptsLogById;
+
+    public ReceiptsModel() {
+    }
+
+    public ReceiptsModel(Integer materialReceiptsLogId, Integer deliveryId) {
+        this.materialReceiptsLogId = materialReceiptsLogId;
+        this.deliveryId = deliveryId;
+    }
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
@@ -23,7 +30,7 @@ public class ReceiptsModel {
     }
 
     @Basic
-    @Column(name = "materialReceiptsLogId")
+    @Column(name = "material_receipts_log_id", nullable = false)
     public Integer getMaterialReceiptsLogId() {
         return materialReceiptsLogId;
     }
@@ -33,7 +40,7 @@ public class ReceiptsModel {
     }
 
     @Basic
-    @Column(name = "deliveryId")
+    @Column(name = "delivery_id", nullable = false)
     public Integer getDeliveryId() {
         return deliveryId;
     }
@@ -66,22 +73,12 @@ public class ReceiptsModel {
     }
 
     @ManyToOne
-    @JoinColumn(name = "materialReceiptsLogId", referencedColumnName = "id", insertable = false, updatable = false)
-    public MaterialReceiptsLogModel getMaterialReceiptsLogByMaterialReceiptsLogId() {
-        return materialReceiptsLogByMaterialReceiptsLogId;
+    @JoinColumn(name = "material_receipts_log_id", referencedColumnName = "id", insertable = false, updatable = false)
+    public MaterialReceiptsLogModel getMaterialReceiptsLogById() {
+        return materialReceiptsLogById;
     }
 
-    public void setMaterialReceiptsLogByMaterialReceiptsLogId(MaterialReceiptsLogModel materialReceiptsLogByMaterialReceiptsLogId) {
-        this.materialReceiptsLogByMaterialReceiptsLogId = materialReceiptsLogByMaterialReceiptsLogId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "deliveryId", referencedColumnName = "id", insertable = false, updatable = false)
-    public DeliveryModel getDeliveryByDeliveryId() {
-        return deliveryByDeliveryId;
-    }
-
-    public void setDeliveryByDeliveryId(DeliveryModel deliveryByDeliveryId) {
-        this.deliveryByDeliveryId = deliveryByDeliveryId;
+    public void setMaterialReceiptsLogById(MaterialReceiptsLogModel materialReceiptsLogById) {
+        this.materialReceiptsLogById = materialReceiptsLogById;
     }
 }

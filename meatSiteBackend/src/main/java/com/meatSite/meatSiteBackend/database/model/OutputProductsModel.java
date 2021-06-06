@@ -8,22 +8,22 @@ public class OutputProductsModel {
     private Long id;
     private Integer productId;
     private Integer operationId;
-    private ProductModel productByProductId;
-    private OperationModel operationByOperationId;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "productId")
+    @Column(name = "product_id", nullable = false)
     public Integer getProductId() {
         return productId;
     }
@@ -33,7 +33,7 @@ public class OutputProductsModel {
     }
 
     @Basic
-    @Column(name = "operationId")
+    @Column(name = "operation_id", nullable = false)
     public Integer getOperationId() {
         return operationId;
     }
@@ -62,25 +62,5 @@ public class OutputProductsModel {
         result = 31 * result + (productId != null ? productId.hashCode() : 0);
         result = 31 * result + (operationId != null ? operationId.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "id", insertable = false, updatable = false)
-    public ProductModel getProductByProductId() {
-        return productByProductId;
-    }
-
-    public void setProductByProductId(ProductModel productByProductId) {
-        this.productByProductId = productByProductId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "operationId", referencedColumnName = "id", insertable = false, updatable = false)
-    public OperationModel getOperationByOperationId() {
-        return operationByOperationId;
-    }
-
-    public void setOperationByOperationId(OperationModel operationByOperationId) {
-        this.operationByOperationId = operationByOperationId;
     }
 }

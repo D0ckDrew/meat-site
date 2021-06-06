@@ -1,7 +1,6 @@
 package com.meatSite.meatSiteBackend.database.model;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Table(name = "suppliers", schema = "meat_site_db", catalog = "")
@@ -9,21 +8,22 @@ public class SuppliersModel {
     private Long id;
     private String name;
     private String note;
-    private Collection<DeliveryModel> deliveriesById;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 100)
     public String getName() {
         return name;
     }
@@ -33,7 +33,7 @@ public class SuppliersModel {
     }
 
     @Basic
-    @Column(name = "note")
+    @Column(name = "note", nullable = true, length = 200)
     public String getNote() {
         return note;
     }
@@ -62,14 +62,5 @@ public class SuppliersModel {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (note != null ? note.hashCode() : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "suppliersBySuppliersId")
-    public Collection<DeliveryModel> getDeliveriesById() {
-        return deliveriesById;
-    }
-
-    public void setDeliveriesById(Collection<DeliveryModel> deliveriesById) {
-        this.deliveriesById = deliveriesById;
     }
 }

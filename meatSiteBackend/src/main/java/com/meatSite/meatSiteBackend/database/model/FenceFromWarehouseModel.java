@@ -10,22 +10,22 @@ public class FenceFromWarehouseModel {
     private Timestamp date;
     private Integer recyclingId;
     private Integer materialExpenseLogId;
-    private RecyclingModel recyclingByRecyclingId;
-    private MaterialExpenseLogModel materialExpenseLogByMaterialExpenseLogId;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     public Timestamp getDate() {
         return date;
     }
@@ -35,7 +35,7 @@ public class FenceFromWarehouseModel {
     }
 
     @Basic
-    @Column(name = "recyclingId")
+    @Column(name = "recycling_id", nullable = false)
     public Integer getRecyclingId() {
         return recyclingId;
     }
@@ -45,7 +45,7 @@ public class FenceFromWarehouseModel {
     }
 
     @Basic
-    @Column(name = "materialExpenseLogId")
+    @Column(name = "material_expense_log_id", nullable = false)
     public Integer getMaterialExpenseLogId() {
         return materialExpenseLogId;
     }
@@ -77,25 +77,5 @@ public class FenceFromWarehouseModel {
         result = 31 * result + (recyclingId != null ? recyclingId.hashCode() : 0);
         result = 31 * result + (materialExpenseLogId != null ? materialExpenseLogId.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "recyclingId", referencedColumnName = "id", insertable = false, updatable = false)
-    public RecyclingModel getRecyclingByRecyclingId() {
-        return recyclingByRecyclingId;
-    }
-
-    public void setRecyclingByRecyclingId(RecyclingModel recyclingByRecyclingId) {
-        this.recyclingByRecyclingId = recyclingByRecyclingId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "materialExpenseLogId", referencedColumnName = "id", insertable = false, updatable = false)
-    public MaterialExpenseLogModel getMaterialExpenseLogByMaterialExpenseLogId() {
-        return materialExpenseLogByMaterialExpenseLogId;
-    }
-
-    public void setMaterialExpenseLogByMaterialExpenseLogId(MaterialExpenseLogModel materialExpenseLogByMaterialExpenseLogId) {
-        this.materialExpenseLogByMaterialExpenseLogId = materialExpenseLogByMaterialExpenseLogId;
     }
 }

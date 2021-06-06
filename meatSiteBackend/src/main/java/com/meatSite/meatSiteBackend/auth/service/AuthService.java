@@ -5,6 +5,7 @@ import com.meatSite.meatSiteBackend.auth.model.LoginStatus;
 import com.meatSite.meatSiteBackend.auth.model.RegistrationStatus;
 import com.meatSite.meatSiteBackend.auth.model.Role;
 import com.meatSite.meatSiteBackend.database.model.UserModel;
+import com.meatSite.meatSiteBackend.response.Response;
 import com.meatSite.meatSiteBackend.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,13 +23,13 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public RegistrationStatus registration(UserModel userModel) {
+    public Response registration(UserModel userModel) {
         if (userService.getUser(userModel.getUsername()) != null) {
-            return RegistrationStatus.USER_ALREADY_EXISTS;
+            return RegistrationStatus.USER_ALREADY_EXISTS.getResponse();
         }
 
         if (userModel.getUsername() == null || userModel.getPassword() == null) {
-            return RegistrationStatus.INVALID_REGISTRATION_DATA;
+            return RegistrationStatus.INVALID_REGISTRATION_DATA.getResponse();
         }
 
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
@@ -38,7 +39,7 @@ public class AuthService {
 
         userService.addUser(userModel);
 
-        return RegistrationStatus.SUCCESSFULLY;
+        return RegistrationStatus.SUCCESSFULLY.getResponse();
     }
 
     public LoginResponse login(String username, String password) {

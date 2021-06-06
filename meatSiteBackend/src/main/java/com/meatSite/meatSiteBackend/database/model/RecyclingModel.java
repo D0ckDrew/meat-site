@@ -2,7 +2,6 @@ package com.meatSite.meatSiteBackend.database.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
 
 @Entity
 @Table(name = "recycling", schema = "meat_site_db", catalog = "")
@@ -13,26 +12,22 @@ public class RecyclingModel {
     private Integer status;
     private Integer operationId;
     private Integer userId;
-    private Collection<FenceFromReceiptsModel> fenceFromReceiptsById;
-    private Collection<FenceFromWarehouseModel> fenceFromWarehousesById;
-    private Collection<ProductionOutputModel> productionOutputsById;
-    private Collection<ReceiptToWarehouseModel> receiptToWarehousesById;
-    private OperationModel operationByOperationId;
-    private UserModel userByUserId;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "startDate")
+    @Column(name = "start_date", nullable = false)
     public Timestamp getStartDate() {
         return startDate;
     }
@@ -42,7 +37,7 @@ public class RecyclingModel {
     }
 
     @Basic
-    @Column(name = "endDate")
+    @Column(name = "end_date", nullable = true)
     public Timestamp getEndDate() {
         return endDate;
     }
@@ -52,7 +47,7 @@ public class RecyclingModel {
     }
 
     @Basic
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     public Integer getStatus() {
         return status;
     }
@@ -62,7 +57,7 @@ public class RecyclingModel {
     }
 
     @Basic
-    @Column(name = "operationId")
+    @Column(name = "operation_id", nullable = false)
     public Integer getOperationId() {
         return operationId;
     }
@@ -72,7 +67,7 @@ public class RecyclingModel {
     }
 
     @Basic
-    @Column(name = "userId")
+    @Column(name = "user_id", nullable = false)
     public Integer getUserId() {
         return userId;
     }
@@ -107,61 +102,5 @@ public class RecyclingModel {
         result = 31 * result + (operationId != null ? operationId.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "recyclingByRecyclingId")
-    public Collection<FenceFromReceiptsModel> getFenceFromReceiptsById() {
-        return fenceFromReceiptsById;
-    }
-
-    public void setFenceFromReceiptsById(Collection<FenceFromReceiptsModel> fenceFromReceiptsById) {
-        this.fenceFromReceiptsById = fenceFromReceiptsById;
-    }
-
-    @OneToMany(mappedBy = "recyclingByRecyclingId")
-    public Collection<FenceFromWarehouseModel> getFenceFromWarehousesById() {
-        return fenceFromWarehousesById;
-    }
-
-    public void setFenceFromWarehousesById(Collection<FenceFromWarehouseModel> fenceFromWarehousesById) {
-        this.fenceFromWarehousesById = fenceFromWarehousesById;
-    }
-
-    @OneToMany(mappedBy = "recyclingByRecyclingId")
-    public Collection<ProductionOutputModel> getProductionOutputsById() {
-        return productionOutputsById;
-    }
-
-    public void setProductionOutputsById(Collection<ProductionOutputModel> productionOutputsById) {
-        this.productionOutputsById = productionOutputsById;
-    }
-
-    @OneToMany(mappedBy = "recyclingByRecyclingId")
-    public Collection<ReceiptToWarehouseModel> getReceiptToWarehousesById() {
-        return receiptToWarehousesById;
-    }
-
-    public void setReceiptToWarehousesById(Collection<ReceiptToWarehouseModel> receiptToWarehousesById) {
-        this.receiptToWarehousesById = receiptToWarehousesById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "operationId", referencedColumnName = "id", insertable = false, updatable = false)
-    public OperationModel getOperationByOperationId() {
-        return operationByOperationId;
-    }
-
-    public void setOperationByOperationId(OperationModel operationByOperationId) {
-        this.operationByOperationId = operationByOperationId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id", insertable = false, updatable = false)
-    public UserModel getUserByUserId() {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(UserModel userByUserId) {
-        this.userByUserId = userByUserId;
     }
 }

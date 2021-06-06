@@ -8,21 +8,22 @@ public class ItemsInProductWarehouseModel {
     private Long id;
     private Integer productId;
     private Double quantity;
-    private ProductModel productByProductId;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "productId")
+    @Column(name = "product_id", nullable = false)
     public Integer getProductId() {
         return productId;
     }
@@ -32,7 +33,7 @@ public class ItemsInProductWarehouseModel {
     }
 
     @Basic
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false, precision = 3)
     public Double getQuantity() {
         return quantity;
     }
@@ -61,15 +62,5 @@ public class ItemsInProductWarehouseModel {
         result = 31 * result + (productId != null ? productId.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "id", insertable = false, updatable = false)
-    public ProductModel getProductByProductId() {
-        return productByProductId;
-    }
-
-    public void setProductByProductId(ProductModel productByProductId) {
-        this.productByProductId = productByProductId;
     }
 }

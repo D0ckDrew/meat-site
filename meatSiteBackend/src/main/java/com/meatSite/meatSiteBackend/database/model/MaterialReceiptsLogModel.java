@@ -2,7 +2,6 @@ package com.meatSite.meatSiteBackend.database.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
 
 @Entity
 @Table(name = "material_receipts_log", schema = "meat_site_db", catalog = "")
@@ -14,26 +13,25 @@ public class MaterialReceiptsLogModel {
     private Integer materialId;
     private Integer materialReceiptsReasonId;
     private Integer userId;
-    private Collection<FenceFromReceiptsModel> fenceFromReceiptsById;
+
     private MaterialModel materialByMaterialId;
-    private MaterialReceiptsReasonModel materialReceiptsReasonByMaterialReceiptsReasonId;
-    private UserModel userByUserId;
-    private Collection<ReceiptToWarehouseModel> receiptToWarehousesById;
-    private Collection<ReceiptsModel> receiptsById;
+    private MaterialReceiptsReasonModel materialReceiptsReasonById;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false, precision = 3)
     public Double getQuantity() {
         return quantity;
     }
@@ -43,7 +41,7 @@ public class MaterialReceiptsLogModel {
     }
 
     @Basic
-    @Column(name = "quantityRemains")
+    @Column(name = "quantity_remains", nullable = false, precision = 3)
     public Double getQuantityRemains() {
         return quantityRemains;
     }
@@ -53,7 +51,7 @@ public class MaterialReceiptsLogModel {
     }
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     public Timestamp getDate() {
         return date;
     }
@@ -63,7 +61,7 @@ public class MaterialReceiptsLogModel {
     }
 
     @Basic
-    @Column(name = "materialId")
+    @Column(name = "material_id", nullable = false)
     public Integer getMaterialId() {
         return materialId;
     }
@@ -73,7 +71,7 @@ public class MaterialReceiptsLogModel {
     }
 
     @Basic
-    @Column(name = "materialReceiptsReasonId")
+    @Column(name = "material_receipts_reason_id", nullable = false)
     public Integer getMaterialReceiptsReasonId() {
         return materialReceiptsReasonId;
     }
@@ -83,7 +81,7 @@ public class MaterialReceiptsLogModel {
     }
 
     @Basic
-    @Column(name = "userId")
+    @Column(name = "user_id", nullable = false)
     public Integer getUserId() {
         return userId;
     }
@@ -124,17 +122,8 @@ public class MaterialReceiptsLogModel {
         return result;
     }
 
-    @OneToMany(mappedBy = "materialReceiptsLogByMaterialReceiptsLogId")
-    public Collection<FenceFromReceiptsModel> getFenceFromReceiptsById() {
-        return fenceFromReceiptsById;
-    }
-
-    public void setFenceFromReceiptsById(Collection<FenceFromReceiptsModel> fenceFromReceiptsById) {
-        this.fenceFromReceiptsById = fenceFromReceiptsById;
-    }
-
     @ManyToOne
-    @JoinColumn(name = "materialId", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "material_id", referencedColumnName = "id", insertable = false, updatable = false)
     public MaterialModel getMaterialByMaterialId() {
         return materialByMaterialId;
     }
@@ -144,40 +133,12 @@ public class MaterialReceiptsLogModel {
     }
 
     @ManyToOne
-    @JoinColumn(name = "materialReceiptsReasonId", referencedColumnName = "id", insertable = false, updatable = false)
-    public MaterialReceiptsReasonModel getMaterialReceiptsReasonByMaterialReceiptsReasonId() {
-        return materialReceiptsReasonByMaterialReceiptsReasonId;
+    @JoinColumn(name = "material_receipts_reason_id", referencedColumnName = "id", insertable = false, updatable = false)
+    public MaterialReceiptsReasonModel getMaterialReceiptsReasonById() {
+        return materialReceiptsReasonById;
     }
 
-    public void setMaterialReceiptsReasonByMaterialReceiptsReasonId(MaterialReceiptsReasonModel materialReceiptsReasonByMaterialReceiptsReasonId) {
-        this.materialReceiptsReasonByMaterialReceiptsReasonId = materialReceiptsReasonByMaterialReceiptsReasonId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id", insertable = false, updatable = false)
-    public UserModel getUserByUserId() {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(UserModel userByUserId) {
-        this.userByUserId = userByUserId;
-    }
-
-    @OneToMany(mappedBy = "materialReceiptsLogByMaterialReceiptsLogId")
-    public Collection<ReceiptToWarehouseModel> getReceiptToWarehousesById() {
-        return receiptToWarehousesById;
-    }
-
-    public void setReceiptToWarehousesById(Collection<ReceiptToWarehouseModel> receiptToWarehousesById) {
-        this.receiptToWarehousesById = receiptToWarehousesById;
-    }
-
-    @OneToMany(mappedBy = "materialReceiptsLogByMaterialReceiptsLogId")
-    public Collection<ReceiptsModel> getReceiptsById() {
-        return receiptsById;
-    }
-
-    public void setReceiptsById(Collection<ReceiptsModel> receiptsById) {
-        this.receiptsById = receiptsById;
+    public void setMaterialReceiptsReasonById(MaterialReceiptsReasonModel materialReceiptsReasonById) {
+        this.materialReceiptsReasonById = materialReceiptsReasonById;
     }
 }

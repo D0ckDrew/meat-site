@@ -9,22 +9,22 @@ public class SaleContentModel {
     private Integer productExpenseLogId;
     private Double costPerUnit;
     private Integer saleId;
-    private ProductExpenseLogModel productExpenseLogByProductExpenseLogId;
-    private SaleModel saleBySaleId;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "productExpenseLogId")
+    @Column(name = "product_expense_log_id", nullable = false)
     public Integer getProductExpenseLogId() {
         return productExpenseLogId;
     }
@@ -34,7 +34,7 @@ public class SaleContentModel {
     }
 
     @Basic
-    @Column(name = "costPerUnit")
+    @Column(name = "cost_per_unit", nullable = false, precision = 2)
     public Double getCostPerUnit() {
         return costPerUnit;
     }
@@ -44,7 +44,7 @@ public class SaleContentModel {
     }
 
     @Basic
-    @Column(name = "saleId")
+    @Column(name = "sale_id", nullable = false)
     public Integer getSaleId() {
         return saleId;
     }
@@ -76,25 +76,5 @@ public class SaleContentModel {
         result = 31 * result + (costPerUnit != null ? costPerUnit.hashCode() : 0);
         result = 31 * result + (saleId != null ? saleId.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "productExpenseLogId", referencedColumnName = "id", insertable = false, updatable = false)
-    public ProductExpenseLogModel getProductExpenseLogByProductExpenseLogId() {
-        return productExpenseLogByProductExpenseLogId;
-    }
-
-    public void setProductExpenseLogByProductExpenseLogId(ProductExpenseLogModel productExpenseLogByProductExpenseLogId) {
-        this.productExpenseLogByProductExpenseLogId = productExpenseLogByProductExpenseLogId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "saleId", referencedColumnName = "id", insertable = false, updatable = false)
-    public SaleModel getSaleBySaleId() {
-        return saleBySaleId;
-    }
-
-    public void setSaleBySaleId(SaleModel saleBySaleId) {
-        this.saleBySaleId = saleBySaleId;
     }
 }

@@ -1,7 +1,6 @@
 package com.meatSite.meatSiteBackend.database.model;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Table(name = "product", schema = "meat_site_db", catalog = "")
@@ -12,26 +11,22 @@ public class ProductModel {
     private Double cost;
     private Integer unitId;
     private Integer typeProductId;
-    private Collection<ItemsInProductWarehouseModel> itemsInProductWarehousesById;
-    private Collection<OutputProductsModel> outputProductsById;
-    private UnitModel unitByUnitId;
-    private TypeProductModel typeProductByTypeProductId;
-    private Collection<ProductExpenseLogModel> productExpenseLogsById;
-    private Collection<ProductReceiptsLogModel> productReceiptsLogsById;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 100)
     public String getName() {
         return name;
     }
@@ -41,7 +36,7 @@ public class ProductModel {
     }
 
     @Basic
-    @Column(name = "photo")
+    @Column(name = "photo", nullable = false)
     public Integer getPhoto() {
         return photo;
     }
@@ -51,7 +46,7 @@ public class ProductModel {
     }
 
     @Basic
-    @Column(name = "cost")
+    @Column(name = "cost", nullable = false, precision = 2)
     public Double getCost() {
         return cost;
     }
@@ -61,7 +56,7 @@ public class ProductModel {
     }
 
     @Basic
-    @Column(name = "unitId")
+    @Column(name = "unit_id", nullable = false)
     public Integer getUnitId() {
         return unitId;
     }
@@ -71,7 +66,7 @@ public class ProductModel {
     }
 
     @Basic
-    @Column(name = "typeProductId")
+    @Column(name = "type_product_id", nullable = false)
     public Integer getTypeProductId() {
         return typeProductId;
     }
@@ -107,61 +102,5 @@ public class ProductModel {
         result = 31 * result + (unitId != null ? unitId.hashCode() : 0);
         result = 31 * result + (typeProductId != null ? typeProductId.hashCode() : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "productByProductId")
-    public Collection<ItemsInProductWarehouseModel> getItemsInProductWarehousesById() {
-        return itemsInProductWarehousesById;
-    }
-
-    public void setItemsInProductWarehousesById(Collection<ItemsInProductWarehouseModel> itemsInProductWarehousesById) {
-        this.itemsInProductWarehousesById = itemsInProductWarehousesById;
-    }
-
-    @OneToMany(mappedBy = "productByProductId")
-    public Collection<OutputProductsModel> getOutputProductsById() {
-        return outputProductsById;
-    }
-
-    public void setOutputProductsById(Collection<OutputProductsModel> outputProductsById) {
-        this.outputProductsById = outputProductsById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "unitId", referencedColumnName = "id", insertable = false, updatable = false)
-    public UnitModel getUnitByUnitId() {
-        return unitByUnitId;
-    }
-
-    public void setUnitByUnitId(UnitModel unitByUnitId) {
-        this.unitByUnitId = unitByUnitId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "typeProductId", referencedColumnName = "id", insertable = false, updatable = false)
-    public TypeProductModel getTypeProductByTypeProductId() {
-        return typeProductByTypeProductId;
-    }
-
-    public void setTypeProductByTypeProductId(TypeProductModel typeProductByTypeProductId) {
-        this.typeProductByTypeProductId = typeProductByTypeProductId;
-    }
-
-    @OneToMany(mappedBy = "productByProductId")
-    public Collection<ProductExpenseLogModel> getProductExpenseLogsById() {
-        return productExpenseLogsById;
-    }
-
-    public void setProductExpenseLogsById(Collection<ProductExpenseLogModel> productExpenseLogsById) {
-        this.productExpenseLogsById = productExpenseLogsById;
-    }
-
-    @OneToMany(mappedBy = "productByProductId")
-    public Collection<ProductReceiptsLogModel> getProductReceiptsLogsById() {
-        return productReceiptsLogsById;
-    }
-
-    public void setProductReceiptsLogsById(Collection<ProductReceiptsLogModel> productReceiptsLogsById) {
-        this.productReceiptsLogsById = productReceiptsLogsById;
     }
 }

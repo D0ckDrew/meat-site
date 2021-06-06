@@ -2,7 +2,6 @@ package com.meatSite.meatSiteBackend.database.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
 
 @Entity
 @Table(name = "material_expense_log", schema = "meat_site_db", catalog = "")
@@ -13,24 +12,22 @@ public class MaterialExpenseLogModel {
     private Integer materialId;
     private Integer materialExpenseReasonId;
     private Integer userId;
-    private Collection<FenceFromWarehouseModel> fenceFromWarehousesById;
-    private MaterialModel materialByMaterialId;
-    private MaterialExpenseReasonModel materialExpenseReasonByMaterialExpenseReasonId;
-    private UserModel userByUserId;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false, precision = 3)
     public Double getQuantity() {
         return quantity;
     }
@@ -40,7 +37,7 @@ public class MaterialExpenseLogModel {
     }
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     public Timestamp getDate() {
         return date;
     }
@@ -50,7 +47,7 @@ public class MaterialExpenseLogModel {
     }
 
     @Basic
-    @Column(name = "materialId")
+    @Column(name = "material_id", nullable = false)
     public Integer getMaterialId() {
         return materialId;
     }
@@ -60,7 +57,7 @@ public class MaterialExpenseLogModel {
     }
 
     @Basic
-    @Column(name = "materialExpenseReasonId")
+    @Column(name = "material_expense_reason_id", nullable = false)
     public Integer getMaterialExpenseReasonId() {
         return materialExpenseReasonId;
     }
@@ -70,7 +67,7 @@ public class MaterialExpenseLogModel {
     }
 
     @Basic
-    @Column(name = "userId")
+    @Column(name = "user_id", nullable = false)
     public Integer getUserId() {
         return userId;
     }
@@ -106,44 +103,5 @@ public class MaterialExpenseLogModel {
         result = 31 * result + (materialExpenseReasonId != null ? materialExpenseReasonId.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "materialExpenseLogByMaterialExpenseLogId")
-    public Collection<FenceFromWarehouseModel> getFenceFromWarehousesById() {
-        return fenceFromWarehousesById;
-    }
-
-    public void setFenceFromWarehousesById(Collection<FenceFromWarehouseModel> fenceFromWarehousesById) {
-        this.fenceFromWarehousesById = fenceFromWarehousesById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "materialId", referencedColumnName = "id", insertable = false, updatable = false)
-    public MaterialModel getMaterialByMaterialId() {
-        return materialByMaterialId;
-    }
-
-    public void setMaterialByMaterialId(MaterialModel materialByMaterialId) {
-        this.materialByMaterialId = materialByMaterialId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "materialExpenseReasonId", referencedColumnName = "id", insertable = false, updatable = false)
-    public MaterialExpenseReasonModel getMaterialExpenseReasonByMaterialExpenseReasonId() {
-        return materialExpenseReasonByMaterialExpenseReasonId;
-    }
-
-    public void setMaterialExpenseReasonByMaterialExpenseReasonId(MaterialExpenseReasonModel materialExpenseReasonByMaterialExpenseReasonId) {
-        this.materialExpenseReasonByMaterialExpenseReasonId = materialExpenseReasonByMaterialExpenseReasonId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id", insertable = false, updatable = false)
-    public UserModel getUserByUserId() {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(UserModel userByUserId) {
-        this.userByUserId = userByUserId;
     }
 }

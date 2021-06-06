@@ -7,44 +7,42 @@ import API from "../utils/API.js"
 class LoginService {
     user = {};
 
-    constructor(){
+    constructor() {
         this.user = window.localStorage.getItem("user");
-        console.log(this.user["nickname"]);
 
-         reaction(() => this.user,
-             (user) => {
+        reaction(() => this.user,
+            (user) => {
                 console.log("ленина свалили");
-                 console.log(this.user);
+                console.log(this.user);
                 this.user = user;
-                 console.log(this.user);
-                 window.localStorage.setItem("user", this.user);
-             })
+                console.log(this.user);
+                window.localStorage.setItem("user", this.user);
+            })
         //if (!this.user)
     }
 
-    registerUser(nickname, password){
+    registerUser(nickname, password) {
         //axios.get(`http://localhost:3001/users`)
     }
 
-    loginUser(loginData){
-        API.post("/users/login", loginData).then(function (result){
-            if (result.data["status"] === 200){
+    loginUser(loginData) {
+        API.post("/users/login", loginData).then(function (result) {
+            if (result.data["status"] === 200) {
                 loginService.user = result.data["user"];
                 message.success("Success");
-            }
-            else {
+            } else {
                 message.error(result.data["message"]);
             }
 
-        }).catch(function(){
+        }).catch(function () {
             message.error("Error");
         })
     }
 }
 
-decorate(LoginService,{
-    user : observable,
-    loginUser : action
+decorate(LoginService, {
+    user: observable,
+    loginUser: action
 });
 
 const loginService = new LoginService();

@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'http://localhost:3001'
+    baseURL: 'http://localhost:8080'
 });
 
 const token = window.localStorage.getItem("token");
-if (window.localStorage.getItem(token)){
+if (window.localStorage.getItem(token)) {
     instance.defaults.headers.common['Authorization'] = token;
 }
 

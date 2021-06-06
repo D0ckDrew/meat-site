@@ -10,22 +10,22 @@ public class ReceiptToWarehouseModel {
     private Timestamp date;
     private Integer recyclingId;
     private Integer materialReceiptsLogId;
-    private RecyclingModel recyclingByRecyclingId;
-    private MaterialReceiptsLogModel materialReceiptsLogByMaterialReceiptsLogId;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     public Timestamp getDate() {
         return date;
     }
@@ -35,7 +35,7 @@ public class ReceiptToWarehouseModel {
     }
 
     @Basic
-    @Column(name = "recyclingId")
+    @Column(name = "recycling_id", nullable = false)
     public Integer getRecyclingId() {
         return recyclingId;
     }
@@ -45,7 +45,7 @@ public class ReceiptToWarehouseModel {
     }
 
     @Basic
-    @Column(name = "materialReceiptsLogId")
+    @Column(name = "material_receipts_log_id", nullable = false)
     public Integer getMaterialReceiptsLogId() {
         return materialReceiptsLogId;
     }
@@ -77,25 +77,5 @@ public class ReceiptToWarehouseModel {
         result = 31 * result + (recyclingId != null ? recyclingId.hashCode() : 0);
         result = 31 * result + (materialReceiptsLogId != null ? materialReceiptsLogId.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "recyclingId", referencedColumnName = "id", insertable = false, updatable = false)
-    public RecyclingModel getRecyclingByRecyclingId() {
-        return recyclingByRecyclingId;
-    }
-
-    public void setRecyclingByRecyclingId(RecyclingModel recyclingByRecyclingId) {
-        this.recyclingByRecyclingId = recyclingByRecyclingId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "materialReceiptsLogId", referencedColumnName = "id", insertable = false, updatable = false)
-    public MaterialReceiptsLogModel getMaterialReceiptsLogByMaterialReceiptsLogId() {
-        return materialReceiptsLogByMaterialReceiptsLogId;
-    }
-
-    public void setMaterialReceiptsLogByMaterialReceiptsLogId(MaterialReceiptsLogModel materialReceiptsLogByMaterialReceiptsLogId) {
-        this.materialReceiptsLogByMaterialReceiptsLogId = materialReceiptsLogByMaterialReceiptsLogId;
     }
 }

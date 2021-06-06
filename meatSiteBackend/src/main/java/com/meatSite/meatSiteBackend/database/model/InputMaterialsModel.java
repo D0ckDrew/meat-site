@@ -9,22 +9,22 @@ public class InputMaterialsModel {
     private Double quantity;
     private Integer materialId;
     private Integer operationId;
-    private MaterialModel materialByMaterialId;
-    private OperationModel operationByOperationId;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false, precision = 3)
     public Double getQuantity() {
         return quantity;
     }
@@ -34,7 +34,7 @@ public class InputMaterialsModel {
     }
 
     @Basic
-    @Column(name = "materialId")
+    @Column(name = "material_id", nullable = false)
     public Integer getMaterialId() {
         return materialId;
     }
@@ -44,7 +44,7 @@ public class InputMaterialsModel {
     }
 
     @Basic
-    @Column(name = "operationId")
+    @Column(name = "operation_id", nullable = false)
     public Integer getOperationId() {
         return operationId;
     }
@@ -75,25 +75,5 @@ public class InputMaterialsModel {
         result = 31 * result + (materialId != null ? materialId.hashCode() : 0);
         result = 31 * result + (operationId != null ? operationId.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "materialId", referencedColumnName = "id", insertable = false, updatable = false)
-    public MaterialModel getMaterialByMaterialId() {
-        return materialByMaterialId;
-    }
-
-    public void setMaterialByMaterialId(MaterialModel materialByMaterialId) {
-        this.materialByMaterialId = materialByMaterialId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "operationId", referencedColumnName = "id", insertable = false, updatable = false)
-    public OperationModel getOperationByOperationId() {
-        return operationByOperationId;
-    }
-
-    public void setOperationByOperationId(OperationModel operationByOperationId) {
-        this.operationByOperationId = operationByOperationId;
     }
 }

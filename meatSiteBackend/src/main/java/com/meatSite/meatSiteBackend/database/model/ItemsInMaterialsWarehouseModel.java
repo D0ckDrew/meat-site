@@ -8,21 +8,22 @@ public class ItemsInMaterialsWarehouseModel {
     private Long id;
     private Double quantity;
     private Integer materialId;
-    private MaterialModel materialByMaterialId;
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false, precision = 3)
     public Double getQuantity() {
         return quantity;
     }
@@ -32,7 +33,7 @@ public class ItemsInMaterialsWarehouseModel {
     }
 
     @Basic
-    @Column(name = "materialId")
+    @Column(name = "material_id", nullable = false)
     public Integer getMaterialId() {
         return materialId;
     }
@@ -61,15 +62,5 @@ public class ItemsInMaterialsWarehouseModel {
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + (materialId != null ? materialId.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "materialId", referencedColumnName = "id", insertable = false, updatable = false)
-    public MaterialModel getMaterialByMaterialId() {
-        return materialByMaterialId;
-    }
-
-    public void setMaterialByMaterialId(MaterialModel materialByMaterialId) {
-        this.materialByMaterialId = materialByMaterialId;
     }
 }
