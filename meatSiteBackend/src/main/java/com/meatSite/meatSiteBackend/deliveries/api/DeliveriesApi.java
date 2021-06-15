@@ -3,6 +3,7 @@ package com.meatSite.meatSiteBackend.deliveries.api;
 import com.meatSite.meatSiteBackend.database.model.DeliveryModel;
 import com.meatSite.meatSiteBackend.database.model.ReceiptsModel;
 import com.meatSite.meatSiteBackend.database.model.SuppliersModel;
+import com.meatSite.meatSiteBackend.deliveries.model.AddedEntranceModel;
 import com.meatSite.meatSiteBackend.materialWarehouse.model.ReceiptElementModel;
 import com.meatSite.meatSiteBackend.deliveries.service.DeliveriesService;
 import com.meatSite.meatSiteBackend.response.Response;
@@ -32,10 +33,8 @@ public class DeliveriesApi {
     }
 
     @PostMapping("/addEntrance")
-    public Response addEntrance(@RequestParam int deliveryId,
-                                @RequestParam List<ReceiptElementModel> receiptElements) {
-
-        return deliveriesService.addEntrance(deliveryId, receiptElements);
+    public Response addEntrance(@RequestBody AddedEntranceModel addedEntrance) {
+        return deliveriesService.addEntrance(addedEntrance.getDeliveryId(), addedEntrance.getReceiptsReasonId(), addedEntrance.getReceiptElements());
     }
 
     @GetMapping("/getDeliveries")

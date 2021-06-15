@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class AuthService {
 
@@ -50,5 +52,10 @@ public class AuthService {
         }
 
         return new LoginResponse(LoginStatus.SUCCESSFULLY);
+    }
+
+    @Transactional
+    public void deleteUser(String username) {
+        userService.deleteUser(username);
     }
 }

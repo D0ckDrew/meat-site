@@ -1,31 +1,45 @@
 import React from 'react';
 import {useState} from 'react';
-import {Row, Col, Layout, Menu, Avatar} from "antd";
+import {Row, Col, Layout, Menu, Avatar, Button, Dropdown, Image} from "antd";
 
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
     LineChartOutlined,
     ShopOutlined,
-    ReconciliationOutlined,
     ScheduleOutlined,
-    ReloadOutlined,
-    TableOutlined, KeyOutlined
+    TableOutlined
 } from '@ant-design/icons';
 
 import '../../styles/LayoutStyles.css';
-import {Link} from "react-router-dom";
+import loginService from "../../services/LoginService";
 
 const {Header, Sider, Content, Footer} = Layout;
 
 const AdminLayout = (props) => {
         const [collapsed, setCollapsed] = useState(false);
 
+        const userMenu = (
+            <Menu>
+                <Menu.Item danger>
+                    <Button type="link" onClick={() => loginService.logOut()}>
+                        Выйти
+                    </Button>
+                </Menu.Item>
+            </Menu>
+        );
+
         function toggle() {
             setCollapsed(!collapsed);
+        }
+
+        function getUsername() {
+            if (loginService.username) {
+                return loginService.username;
+            } else {
+                return "default_user"
+            }
         }
 
         function selectedMenuKey() {
@@ -46,7 +60,11 @@ const AdminLayout = (props) => {
         return (
             <Layout style={{minHeight: '100vh'}}>
                 <Sider trigger={null} collapsible collapsed={collapsed}>
-                    <div className="logo"/>
+                    <div className="logo"><Image
+                        height={'100%'}
+                        style={{objectFit: 'cover'}}
+                        src="http://localhost:3000/logo-meat.jpg"
+                    /></div>
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={[selectedMenuKey()]}>
                         <Menu.Item key="1" icon={<TableOutlined/>}>
                             <a href="/admin/main-page">
@@ -58,25 +76,16 @@ const AdminLayout = (props) => {
                                 Поставки
                             </a>
                         </Menu.Item>
-                        {/*<Menu.Item key="3" icon={<ReloadOutlined/>}>*/}
-                        {/*    Перерабоки*/}
-                        {/*</Menu.Item>*/}
                         <Menu.Item key="3" icon={<ShopOutlined/>}>
                             <a href="/admin/sale-page">
                                 Продажи
                             </a>
                         </Menu.Item>
-                        {/*<Menu.Item key="5" icon={<ReconciliationOutlined/>}>*/}
-                        {/*    Склад*/}
-                        {/*</Menu.Item>*/}
                         <Menu.Item key="4" icon={<LineChartOutlined/>}>
                             <a href="/admin/analytic-page">
                                 Аналитика
                             </a>
                         </Menu.Item>
-                        {/*<Menu.Item key="6" icon={<KeyOutlined/>}>*/}
-                        {/*    Администрирование*/}
-                        {/*</Menu.Item>*/}
                     </Menu>
                 </Sider>
                 <Layout className="site-layout">
@@ -87,10 +96,14 @@ const AdminLayout = (props) => {
                                     <MenuFoldOutlined className="trigger" onClick={() => toggle()}/>}
                             </Col>
                             <Col span={12}>
-                                <Link to={'/login'}>
-                                    <strong className="login">user_user1 &nbsp;<Avatar size={32}
-                                                                                       icon={<UserOutlined/>}/></strong>
-                                </Link>
+                                <Button type="link" style={{float: 'right'}}>
+                                    <Dropdown overlay={userMenu} trigger={['click']}>
+                                        <strong className="login">
+                                            {getUsername()}
+                                            &nbsp;<Avatar size={32}
+                                                          icon={<UserOutlined/>}/></strong>
+                                    </Dropdown>
+                                </Button>
                             </Col>
                         </Row>
 

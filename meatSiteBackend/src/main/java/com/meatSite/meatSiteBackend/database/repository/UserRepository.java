@@ -11,4 +11,6 @@ public interface UserRepository extends CrudRepository<UserModel, Long> {
 
     List<UserModel> getFirstByUsername(String username);
 
+    void deleteByUsername(String username);
+
 }

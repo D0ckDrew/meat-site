@@ -10,4 +10,6 @@ import java.util.List;
 public interface ItemsInMaterialsWarehouseRepository extends CrudRepository<ItemsInMaterialsWarehouseModel, Long> {
 
     List<ItemsInMaterialsWarehouseModel> getFirstByMaterialId(Integer materialId);
+
+
 }

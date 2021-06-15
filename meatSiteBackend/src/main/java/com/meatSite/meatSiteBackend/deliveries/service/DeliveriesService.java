@@ -60,9 +60,9 @@ public class DeliveriesService {
     }
 
     @Transactional
-    public Response addEntrance(int deliveryId, List<ReceiptElementModel> receiptElements) {
+    public Response addEntrance(int deliveryId, int receiptsReasonId, List<ReceiptElementModel> receiptElements) {
 
-        if (deliveryId < 0 || receiptElements.size() <= 0) {
+        if (deliveryId < 0 || receiptElements == null || receiptElements.size() <= 0) {
             return ResponseStatus.VALIDATION_ERROR.getResponse();
         }
 
@@ -81,7 +81,9 @@ public class DeliveriesService {
             materialReceiptsLogModel.setDate(new Timestamp(new Date().getTime()));
             materialReceiptsLogModel.setMaterialId(receiptElement.getMaterialId());
             materialReceiptsLogModel.setQuantity(receiptElement.getCount());
-            Long mtRcLgId = materialWarehouseService.addMaterialFromWarehouse(materialReceiptsLogModel, oldMaterialReceiptsLog);
+            materialReceiptsLogModel.setMaterialReceiptsReasonId(receiptsReasonId);
+            materialReceiptsLogModel.setUserId(1);
+            Long mtRcLgId = materialWarehouseService.addMaterialFromWarehouseLog(materialReceiptsLogModel, oldMaterialReceiptsLog);
 
             receiptsModel.setDeliveryId(deliveryId);
             receiptsModel.setMaterialReceiptsLogId(mtRcLgId.intValue());

@@ -4,8 +4,7 @@ import {Table, Skeleton} from "antd";
 import {observer} from "mobx-react";
 import AdminLayout from "../components/layot/AdminLayout";
 import deliveryService from "../services/DeliveryService";
-import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
-import {Option} from "antd/es/mentions";
+import {PlusOutlined} from "@ant-design/icons";
 import useForm from "antd/es/form/hooks/useForm";
 import materialWarehouseService from "../services/MaterialWarehouseService";
 
@@ -30,7 +29,7 @@ const AdminMainPage = observer(() => {
         setVisibleModel1(false);
     }
 
-    function showEntrancesModal(deliveryId){
+    function showEntrancesModal(deliveryId) {
         console.log(deliveryId);
         deliveryService.getReceiptsByDeliveryId(deliveryId);
 
@@ -173,7 +172,10 @@ const AdminMainPage = observer(() => {
             <Modal
                 title="Редактирование позиций"
                 visible={visibleModal2}
-                onOk={() => {setVisibleModel2(false); console.log(formEntrances.getFieldsValue())}}
+                onOk={() => {
+                    setVisibleModel2(false);
+                    console.log(formEntrances.getFieldsValue())
+                }}
                 onCancel={() => setVisibleModel2(false)}
                 okText="Добавить"
                 cancelText="Отмена"
@@ -181,10 +183,10 @@ const AdminMainPage = observer(() => {
             >
                 <Form name="dynamic_form_nest_item" form={formEntrances} autoComplete="off">
                     <Form.List name="entrances">
-                        {(fields, { add, remove }) => (
+                        {(fields, {add, remove}) => (
                             <>
-                                {fields.map(({ key, name, fieldKey, ...restField }) => (
-                                    <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                {fields.map(({key, name, fieldKey, ...restField}) => (
+                                    <Space key={key} style={{display: 'flex', marginBottom: 8}} align="baseline">
                                         <Form.Item
                                             {...restField}
                                             name={[name, 'material']}
@@ -226,18 +228,13 @@ const AdminMainPage = observer(() => {
                                     </Space>
                                 ))}
                                 <Form.Item>
-                                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined/>}>
                                         Добавить позицию
                                     </Button>
                                 </Form.Item>
                             </>
                         )}
                     </Form.List>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Submit
-                        </Button>
-                    </Form.Item>
                 </Form>
             </Modal>
         </div>

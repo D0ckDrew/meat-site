@@ -1,4 +1,4 @@
-package com.meatSite.meatSiteBackend.materialWarehouse.service;
+package com.meatSite.meatSiteBackend.productWarehouse.service;
 
 import com.meatSite.meatSiteBackend.database.model.ItemsInMaterialsWarehouseModel;
 import com.meatSite.meatSiteBackend.database.model.MaterialModel;
@@ -15,16 +15,16 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class MaterialWarehouseService {
+public class ProductWarehouseService {
 
     private final MaterialReceiptsLogRepository materialReceiptsLogRepository;
     private final ItemsInMaterialsWarehouseRepository itemsInMaterialsWarehouseRepository;
     private final MaterialRepository materialRepository;
 
     @Autowired
-    public MaterialWarehouseService(MaterialReceiptsLogRepository materialReceiptsLogRepository,
-                                    ItemsInMaterialsWarehouseRepository itemsInMaterialsWarehouseRepository,
-                                    MaterialRepository materialRepository) {
+    public ProductWarehouseService(MaterialReceiptsLogRepository materialReceiptsLogRepository,
+                                   ItemsInMaterialsWarehouseRepository itemsInMaterialsWarehouseRepository,
+                                   MaterialRepository materialRepository) {
         this.materialReceiptsLogRepository = materialReceiptsLogRepository;
         this.itemsInMaterialsWarehouseRepository = itemsInMaterialsWarehouseRepository;
         this.materialRepository = materialRepository;
@@ -32,8 +32,8 @@ public class MaterialWarehouseService {
 
 
     @Transactional
-    public Long addMaterialFromWarehouseLog(MaterialReceiptsLogModel materialReceiptsLog, MaterialReceiptsLogModel oldMaterialReceiptsLog) {
-        if (materialReceiptsLog.getQuantityRemains() == null || materialReceiptsLog.getQuantityRemains() == 0) {
+    public Long addMaterialFromWarehouse(MaterialReceiptsLogModel materialReceiptsLog, MaterialReceiptsLogModel oldMaterialReceiptsLog) {
+        if (materialReceiptsLog.getQuantityRemains() == null || materialReceiptsLog.getQuantityRemains() == 0.0) {
             materialReceiptsLog.setQuantityRemains(materialReceiptsLog.getQuantity());
         }
 
@@ -63,38 +63,27 @@ public class MaterialWarehouseService {
     }
 
     public void addMaterialFromWarehouse(ItemsInMaterialsWarehouseModel itemsInMaterialsWarehouse) {
-        ItemsInMaterialsWarehouseModel addingItem = new ItemsInMaterialsWarehouseModel(itemsInMaterialsWarehouse.getQuantity(), itemsInMaterialsWarehouse.getMaterialId());
-
         List<ItemsInMaterialsWarehouseModel> warehouseItem = itemsInMaterialsWarehouseRepository.getFirstByMaterialId(itemsInMaterialsWarehouse.getMaterialId());
+
         if (warehouseItem.size() > 0) {
-            addingItem.setId(warehouseItem.get(0).getId());
-            addingItem.setQuantity(warehouseItem.get(0).getQuantity() + addingItem.getQuantity());
+            itemsInMaterialsWarehouse.setId(warehouseItem.get(0).getId());
+            itemsInMaterialsWarehouse.setQuantity(warehouseItem.get(0).getQuantity() + itemsInMaterialsWarehouse.getQuantity());
         }
 
-        itemsInMaterialsWarehouseRepository.save(addingItem);
+        itemsInMaterialsWarehouseRepository.save(itemsInMaterialsWarehouse);
     }
 
     public void reduceMaterialFromWarehouse(ItemsInMaterialsWarehouseModel itemsInMaterialsWarehouse) {
-        ItemsInMaterialsWarehouseModel removedItem = new ItemsInMaterialsWarehouseModel(itemsInMaterialsWarehouse.getQuantity(), itemsInMaterialsWarehouse.getMaterialId());
-
         List<ItemsInMaterialsWarehouseModel> warehouseItem = itemsInMaterialsWarehouseRepository.getFirstByMaterialId(itemsInMaterialsWarehouse.getMaterialId());
 
         if (warehouseItem.size() > 0) {
-            removedItem.setId(warehouseItem.get(0).getId());
-            removedItem.setQuantity(warehouseItem.get(0).getQuantity() - removedItem.getQuantity());
+            itemsInMaterialsWarehouse.setId(warehouseItem.get(0).getId());
+            itemsInMaterialsWarehouse.setQuantity(warehouseItem.get(0).getQuantity() - itemsInMaterialsWarehouse.getQuantity());
         } else {
             return;
         }
 
-        itemsInMaterialsWarehouseRepository.save(removedItem);
-    }
-
-    public ItemsInMaterialsWarehouseModel getItemInMaterialsWarehouse(int materialId) {
-        List<ItemsInMaterialsWarehouseModel> warehouseItem = itemsInMaterialsWarehouseRepository.getFirstByMaterialId(materialId);
-        if (warehouseItem.size() > 0) {
-            return warehouseItem.get(0);
-        }
-        return new ItemsInMaterialsWarehouseModel(0.0, materialId);
+        itemsInMaterialsWarehouseRepository.save(itemsInMaterialsWarehouse);
     }
 
     public List<MaterialModel> getMaterials(){

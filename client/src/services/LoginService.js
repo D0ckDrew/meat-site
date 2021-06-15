@@ -5,18 +5,16 @@ import {decorate} from "mobx/lib/mobx";
 import API from "../utils/API.js"
 
 class LoginService {
-    user = {};
+    username = "";
 
     constructor() {
-        this.user = window.localStorage.getItem("user");
+        this.username = window.localStorage.getItem("username");
 
-        reaction(() => this.user,
-            (user) => {
-                console.log("ленина свалили");
-                console.log(this.user);
-                this.user = user;
-                console.log(this.user);
-                window.localStorage.setItem("user", this.user);
+        reaction(() => this.username,
+            (username) => {
+                console.log(username);
+                this.username = username;
+                window.localStorage.setItem("username", this.username);
             })
         //if (!this.user)
     }
@@ -25,13 +23,28 @@ class LoginService {
         //axios.get(`http://localhost:3001/users`)
     }
 
+    logOut() {
+        window.localStorage.removeItem("username");
+        window.location.assign('/login');
+    }
+
     loginUser(loginData) {
-        API.post("/users/login", loginData).then(function (result) {
-            if (result.data["status"] === 200) {
-                loginService.user = result.data["user"];
-                message.success("Success");
+        const params = new URLSearchParams(loginData);
+        API.post("/auth/login", null,{params})
+            .then(function (result) {
+            if (result.status === 200) {
+                if (result.data.loginStatus.code === 0) {
+                    loginService.username = loginData.username;
+                    window.localStorage.setItem("username", loginData.username);
+                    window.localStorage.setItem("token", loginData.token);
+                    message.success(result.data.loginStatus.message);
+                    window.location.assign('/admin/main-page');
+                } else {
+                    message.error(result.data.loginStatus.message);
+                }
+
             } else {
-                message.error(result.data["message"]);
+                message.error("Error");
             }
 
         }).catch(function () {

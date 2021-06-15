@@ -9,14 +9,20 @@ public class ItemsInMaterialsWarehouseModel {
     private Double quantity;
     private Integer materialId;
 
+    public ItemsInMaterialsWarehouseModel() {
+    }
+
+    public ItemsInMaterialsWarehouseModel(Double quantity, Integer materialId) {
+        this.quantity = quantity;
+        this.materialId = materialId;
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
-
-
 
     public void setId(Long id) {
         this.id = id;

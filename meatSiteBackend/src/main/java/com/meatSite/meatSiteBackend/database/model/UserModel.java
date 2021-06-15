@@ -12,14 +12,23 @@ public class UserModel {
     private String surname;
     private String role;
 
+    public UserModel() {
+    }
+
+    public UserModel(Long id, String username, String password, String name, String surname) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
     public Long getId() {
         return id;
     }
-
-
 
     public void setId(Long id) {
         this.id = id;
